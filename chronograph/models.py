@@ -21,7 +21,7 @@ import traceback
 
 from datetime import datetime, timedelta
 from dateutil import rrule
-from StringIO import StringIO
+from io import StringIO
 from threading import Thread
 
 logger = logging.getLogger('chronograph.models')
@@ -330,7 +330,7 @@ class Job(models.Model):
             call_command(self.command, *args, **options)
             logger.debug("Command '%s' completed" % self.command)
             self.last_run_successful = True
-        except Exception, e:
+        except Exception as e:
             # The command failed to run; log the exception
             t = loader.get_template('chronograph/error_message.txt')
             c = Context({

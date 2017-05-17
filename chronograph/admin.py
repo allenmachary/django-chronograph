@@ -1,10 +1,10 @@
 from django import forms
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.core.management import get_commands
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
-from django.forms.util import flatatt
+from django.forms.utils import flatatt
 from django.http import HttpResponseRedirect, Http404
 from django.template.defaultfilters import linebreaks
 from django.utils.datastructures import MultiValueDict
@@ -131,9 +131,9 @@ class JobAdmin(admin.ModelAdmin):
     
     def get_urls(self):
         urls = super(JobAdmin, self).get_urls()
-        my_urls = patterns('',
+        my_urls = [
             url(r'^(.+)/run/$', self.admin_site.admin_view(self.run_job_view), name="chronograph_job_run")
-        )
+        ]
         return my_urls + urls
     
     def run_selected_jobs(self, request, queryset):
